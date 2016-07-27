@@ -1,0 +1,68 @@
+@font-face {
+  font-family: "MyIcon";
+  src: url('../fonts/MyIcon.eot');
+  src: url('../fonts/MyIcon.eot?#iefix') format('eot'),
+  url('../fonts/MyIcon.woff2') format('woff2'),
+  url('../fonts/MyIcon.woff') format('woff'),
+  url('../fonts/MyIcon.ttf') format('truetype'),
+  url('../fonts/MyIcon.svg#MyIcon') format('svg');
+}
+
+@mixin ic-styles {
+  font-family: "MyIcon";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-style: normal;
+  font-variant: normal;
+  font-weight: normal;
+  // speak: none; // only necessary if not using the private unicode range (firstGlyph option)
+  text-decoration: none;
+  text-transform: none;
+}
+
+%ic {
+  @include ic-styles;
+}
+
+@function ic-char($filename) {
+  $char: "";
+
+  @if $filename == calendar {
+  $char: "\E001";
+}
+  @if $filename == list {
+  $char: "\E002";
+}
+  @if $filename == setting {
+  $char: "\E003";
+}
+  @if $filename == wine {
+  $char: "\E004";
+}
+
+@return $char;
+}
+
+@mixin ic($filename, $insert: before, $extend: true) {
+&:#{$insert} {
+  @if $extend {
+    @extend %ic;
+  } @else {
+    @include ic-styles;
+  }
+  content: ic-char($filename);
+}
+}
+
+.ic-calendar {
+  @include ic(calendar);
+}
+.ic-list {
+  @include ic(list);
+}
+.ic-setting {
+  @include ic(setting);
+}
+.ic-wine {
+  @include ic(wine);
+}
